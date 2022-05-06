@@ -3,7 +3,7 @@ import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { ApiService } from './api.service';
-import { Article, ArticleListConfig } from '../models';
+import { Article, ArticleListConfig, CatFact } from '../models';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -58,6 +58,10 @@ export class ArticlesService {
 
   unfavorite(slug): Observable<Article> {
     return this.apiService.delete('/articles/' + slug + '/favorite');
+  }
+
+  getInspiration(): Observable<CatFact> {
+    return this.apiService.getCatFact();
   }
 
 
