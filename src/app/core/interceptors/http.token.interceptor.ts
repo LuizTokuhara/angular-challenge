@@ -14,6 +14,10 @@ export class HttpTokenInterceptor implements HttpInterceptor {
       'Accept': 'application/json'
     };
 
+    if (req.url.includes('cat-fact')) {
+      return next.handle(req);
+    }
+
     const token = this.jwtService.getToken();
 
     if (token) {
