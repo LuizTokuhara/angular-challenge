@@ -16,6 +16,7 @@ export class EditorComponent implements OnInit {
   tagField = new FormControl();
   errors: Object = {};
   isSubmitting = false;
+  apiError: boolean;
 
   constructor(
     private articlesService: ArticlesService,
@@ -41,6 +42,7 @@ export class EditorComponent implements OnInit {
   ngOnInit() {
     // If there's an article prefetched, load it
     this.route.data.subscribe((data: { article: Article }) => {
+      console.log(data)
       if (data.article) {
         this.article = data.article;
         this.articleForm.patchValue(data.article);
@@ -98,9 +100,13 @@ export class EditorComponent implements OnInit {
       map(res => res.text),
     )
     .subscribe((text) => {
+      this.apiError = false;
+      this.cd.markForCheck();
       this.articleForm.get('body').setValue(text);
     }, (err) => {
-      console.log('error - ', err)
-    })
+      this.apiError = true;
+      console.log(this.apiError)
+      this.cd.markForCheck();
+    });
   }
 }
