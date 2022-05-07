@@ -15,7 +15,8 @@ export class ApiService {
   ) {}
 
   private formatErrors(error: any) {
-    return  throwError(error.error);
+    const errorMessage = error.error ? error.error : error.message;
+    return  throwError(errorMessage);
   }
 
   get(path: string, params: HttpParams = new HttpParams()): Observable<any> {
@@ -44,7 +45,7 @@ export class ApiService {
   }
 
   getCatFact(): Observable<CatFact> {
-    return this.http.get<CatFact>(`${environment.cat_fact_api_url}a`)
+    return this.http.get<CatFact>(`${environment.cat_fact_api_url}`)
       .pipe(catchError(this.formatErrors))
   }
 }
